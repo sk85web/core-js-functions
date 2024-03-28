@@ -74,12 +74,11 @@ function getArgumentsCount(funcs) {
  *
  */
 function getPowerFunction(exponent) {
-  return function (num) {
+  return function inner(num) {
     return num ** exponent;
   };
 }
-const power2 = getPowerFunction(2);
-console.log(power2(2));
+
 /**
  * Returns the polynom function of one argument based on specified coefficients.
  * See: https://en.wikipedia.org/wiki/Polynomial#Definition
@@ -174,8 +173,10 @@ function logger(/* func, logFunc */) {
  *   partialUsingArguments(fn, 'a','b','c')('d') => 'abcd'
  *   partialUsingArguments(fn, 'a','b','c','d')() => 'abcd'
  */
-function partialUsingArguments(/* fn, ...args1 */) {
-  throw new Error('Not implemented');
+function partialUsingArguments(fn, ...args1) {
+  return function inner(...args2) {
+    return fn(...args1, ...args2);
+  };
 }
 
 /**
